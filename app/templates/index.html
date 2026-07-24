@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ورود داده تولید</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #e3f0fc, #fafdff 70%);
+            font-family: Tahoma, sans-serif;
+            color: #2f6d9c;
+            min-height: 100vh;
+        }
+        .container { max-width: 960px; }
+        .card {
+            background: #ffffffee;
+            border-radius: 18px;
+            border: 1.5px solid #b9defb;
+            box-shadow: 0 6px 24px rgba(60, 160, 240, .08);
+        }
+        .nav-tabs {
+            background: #d2edfc;
+            border: none;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 4px 16px rgba(70, 160, 240, .08) inset;
+        }
+        .nav-tabs .nav-link {
+            color: #398edb;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            margin: 0 4px;
+        }
+        .nav-tabs .nav-link:hover {
+            background: #e3f6ff;
+            color: #2770af;
+        }
+        .nav-tabs .nav-link.active {
+            background: #45a6f7;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(69, 166, 247, .18);
+        }
+        .tab-content {
+            border: 1px solid #b9defb;
+            border-top: none;
+            border-radius: 0 0 14px 14px;
+            padding: 16px;
+            background: #fafdff;
+        }
+        .form-control, .form-select {
+            background: #fafdff!important;
+            border: 1px solid #b9defb!important;
+            border-radius: 10px;
+            color: #2f6d9c;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #45a6f7!important;
+            box-shadow: 0 0 0 0.2rem rgba(69, 166, 247, .15)!important;
+        }
+        .bg-light {
+            background: #e3f6ff!important;
+            border: 1px solid #b9defb!important;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(180, 220, 250, .08);
+        }
+        .btn-success {
+            background: linear-gradient(to left, #45a6f7 92%, #8fd0ff 100%);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="card p-4">
+        <h4 class="text-center mb-3">⚙️ سیستم ثبت داده‌های تولید</h4>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{% if category == 'success' %}success{% else %}danger{% endif %} py-2">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <ul class="nav nav-tabs mb-0">
+            {% for k, v in sections.items() %}
+                <li class="nav-item">
+                    <button class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#{{ k }}">
+                        {{ v.title }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <div class="tab-content">
+            {% for k, v in sections.items() %}
+                <div class="tab-pane fade {% if loop.first %}show active{% endif %}" id="{{ k }}">
+                    <form method="post" action="{{ url_for('main.add', t=k) }}">
+                        <div class="row bg-light p-3 rounded mb-3">
+                            <div class="col-md-3">
+                                <label>سال</label>
+                                <select name="year" class="form-select">
+                                    {% for y in range(1401, 1407) %}
+                                        <option {% if y == today[0] %}selected{% endif %}>{{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label>ماه</label>
+                                <select name="month" class="form-select month" onchange="updateDays(this)">
+                                    {% for i, m in [(1,'فروردین'),(2,'اردیبهشت'),(3,'خرداد'),(4,'تیر'),(5,'مرداد'),(6,'شهریور'),(7,'مهر'),(8,'آبان'),(9,'آذر'),(10,'دی'),(11,'بهمن'),(12,'اسفند')] %}
+                                        <option value="{{ '%02d'|format(i) }}" {% if i == today[1] %}selected{% endif %}>{{ m }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>روز</label>
+                                <select name="day" class="form-select day">
+                                    {% for d in range(1, 32) %}
+                                        <option value="{{ '%02d'|format(d) }}" {% if d == today[2] %}selected{% endif %}>{{ d }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            {% for f, l, t in v.fields %}
+                                <div class="col-md-6 mb-3">
+                                    <label>{{ l }}</label>
+                                    {% if t == "number" %}
+                                        <input type="number" name="{{ f }}" class="form-control">
+                                    {% elif t == "time" %}
+                                        <input type="time" name="{{ f }}" class="form-control">
+                                    {% elif t == "select" %}
+                                        <select name="{{ f }}" class="form-select">
+                                            {% if f == "station" %}
+                                                {% for st in stations %}<option value="{{ st }}">{{ st }}</option>{% endfor %}
+                                            {% elif f == "reason" %}
+                                                {% for rs in reasons %}<option value="{{ rs }}">{{ rs }}</option>{% endfor %}
+                                            {% elif f == "responsible_unit" %}
+                                                {% for un in units %}<option value="{{ un }}">{{ un }}</option>{% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    {% else %}
+                                        <input type="text" name="{{ f }}" class="form-control">
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-success px-5">💾 ذخیره</button>
+                        </div>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+function updateDays(m){
+    let d = m.closest('form').querySelector('.day');
+    let mv = parseInt(m.value, 10);
+    let max = (mv <= 6) ? 31 : (mv <= 11 ? 30 : 29);
+    let cur = d.value;
+    d.innerHTML = '';
+    for (let i = 1; i <= max; i++){
+        let v = i < 10 ? '0' + i : i;
+        let o = new Option(i, v);
+        if (v == cur) o.selected = true;
+        d.add(o);
+    }
+}
+document.querySelectorAll('.month').forEach(updateDays);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
