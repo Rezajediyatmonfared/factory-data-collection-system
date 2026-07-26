@@ -1,42 +1,51 @@
-# Factory Production Tracker & Inventory Manager
+# Factory Production Tracker & Data Ecosystem
 
-A lightweight, modular, and web-based solution for real-time factory data management, designed to bridge the gap between enterprise ERP limitations and operational efficiency needs.
+## 🏭 The Professional Context
+As the Head of Production Planning and Inventory Control at a major automotive manufacturing facility, I have consistently faced a common industrial dilemma: **The Gap.** 
+
+Enterprise Resource Planning (ERP) systems are essential for finance and high-level management, but they are often rigid, slow to adapt, and expensive to modify. Shop floor operations—where production pace changes, parts shortages happen, and bottlenecks emerge—require agility that these monolithic systems often lack.
+
+I developed this web-based tracker to bridge the gap between "what the system says" and "what happens on the factory floor." This tool is not just a form-filler; it is the first step in digitizing our production intelligence.
+
+## 🛠 The Journey: From Industrial Engineering to Code
+My approach to this project mirrored the methodologies of industrial engineering: Define, Prototype, Optimize, and Deploy.
+
+### 1. Defining the Problem
+The core issue was data fragmentation. Crucial metrics—Line Stoppages, Chassis Inventory, and Parts Shortages—were being managed in disparate files or manually tracked. This prevented real-time analytics and data-driven decision-making.
+
+### 2. Prototyping (The Laboratory Phase)
+I began by treating the problem as a data analysis exercise. Using **Jupyter Notebooks**, I modeled the logic, tested the data relationships, and validated the flow (historical analysis of these notebooks can be found in the `/notebooks` directory). This phase was my "laboratory," ensuring that the mathematical foundations were sound before writing a single line of production code.
+
+### 3. Architecture & Deployment (The Scalable Phase)
+Moving from a notebook to a persistent application required a shift in architecture. I refactored the project into a robust **Flask** web application with a modular structure:
+*   **Database Layer (SQLite):** Decoupled storage for persistent, structured historical data.
+*   **Backend Logic:** Standardized routing and data handling to ensure scalability.
+*   **Frontend (Responsive UI):** Clean, Bootstrap-based RTL interface designed for factory accessibility.
+
+This architecture ensures that the system is not a one-off script, but a **Mini-ERP framework** that can be expanded to cover other factory domains like Quality Control (QC) or Maintenance (PM).
 
 ![Demo](production_system.gif)
 
-## The Story Behind This Project
-As the Head of Production Planning and Inventory Control in an automotive factory, I frequently encountered constraints within our enterprise software. Enterprise systems are often rigid, high-cost to modify, and lack the agility required for rapid operational changes. 
+## 📂 Project Architecture
+The project is built with maintainability in mind:
+- **`run.py`**: The entry point for the application.
+- **`factory_management_new.db`**: The SQLite database engine capturing live operational data.
+- **`/notebooks`**: Archival of the initial research and logical proofs.
+- **Templates**: HTML structures utilizing Jinja2 for dynamic rendering.
 
-I initiated this project to solve specific data-gap problems:
-1. **Data Integrity**: Ensuring daily production and stoppage data is structured and stored for future analysis.
-2. **Operational Agility**: Creating a rapid-deployment tool to capture data that the main ERP system fails to track efficiently.
-3. **Engineering Approach**: Moving from quick-and-dirty data analysis to a scalable, production-ready environment.
+## 🚀 Key Modules
+1.  **Production & Delivery:** Real-time synchronization of planned vs. actual production.
+2.  **Line Stoppage Monitor:** Root-cause analysis data collection.
+3.  **Inventory Management:** Tracking Factory vs. Customs chassis status.
+4.  **Parts Shortage:** Identifying supply chain bottlenecks early.
 
-## Project Evolution
-### Phase 1: Problem Definition & Prototyping
-The project began as an exploratory research phase within **Jupyter Notebooks** (archived in `/notebooks`). The goal was to prove the data logic and ensure the metrics we needed—such as line stoppages and chassis inventory levels—could be accurately calculated and stored.
+## 💻 Tech Stack
+- **Backend:** Python, Flask, SQLite.
+- **Frontend:** HTML5/CSS3, Bootstrap 5.
+- **Development Environment:** VS Code, Git.
 
-### Phase 2: Architectural Transition
-As the complexity grew, keeping logic within notebooks became unsustainable. I refactored the entire system into a modular **Flask** web application. This transition focused on:
-- **Clean Architecture**: Separating concerns to ensure the codebase remains maintainable and scalable.
-- **Persistent Data**: Implementing **SQLite** to replace volatile memory, allowing for long-term historical analysis.
-- **Frontend Optimization**: Using Bootstrap for a responsive UI, ensuring accessibility on the factory floor.
-
-## Core Modules
-- **Production & Delivery**: Tracking real-time production counts versus targets (Plan vs. Actual).
-- **Line Stoppage Monitoring**: Capturing downtime details, stations, and root causes for continuous improvement.
-- **Chassis Inventory**: Real-time visibility into factory and customs chassis.
-- **Parts Shortage**: Proactive management of supply chain bottlenecks.
-
-## Technology Stack
-- **Backend**: Python (Flask)
-- **Database**: SQLite
-- **Frontend**: HTML5, Bootstrap 5 (RTL-optimized for Persian context)
-- **Environment**: VS Code, Git
-
-## How to Run
-1. Clone the repository:
+## Getting Started
+1. **Clone the repo:**
 ```bash
    git clone https://github.com/Rezajediyatmonfared/factory-production-tracker.git
-   cd factory-production-tracker
    
