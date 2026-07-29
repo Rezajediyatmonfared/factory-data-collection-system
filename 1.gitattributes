@@ -1,0 +1,5 @@
+*.py linguist-vendored
+*.ipynb linguist-vendored
+
+venv/** linguist-vendored
+.venv/** linguist-vendored
