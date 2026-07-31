@@ -1,28 +1,88 @@
 # Industrial Intelligence Platform: Factory Production & Inventory Control
 
 A web-based production data collection and inventory management system designed for real manufacturing operations.  
-This project integrates **industrial engineering logic**, **data analysis workflows**, and **software engineering architecture** to support production tracking, stoppage analysis, and inventory visibility in a factory environment.
+This project was built to transform fragmented shop-floor records into a structured operational platform that supports production visibility, stoppage tracking, inventory control, and data-driven monitoring.
+
+It combines **industrial engineering logic**, **data analysis methodology**, and **software engineering implementation** to solve a practical manufacturing problem through a full prototype-to-deployment workflow.
 
 ---
 
 ## Overview
 
-This platform was developed to address practical challenges in production planning and shop-floor monitoring, where operational data is often fragmented, manually recorded, and difficult to analyze consistently.
+In many factory environments, critical production and inventory data are still captured through disconnected spreadsheets, handwritten logs, or informal communication between departments. While those methods may appear workable in the short term, they create persistent operational and analytical problems:
 
-The system provides a structured way to collect, manage, and review production and inventory-related information, with a strong focus on:
+- inconsistent data capture
+- delayed reporting
+- weak traceability
+- difficulty identifying recurring process disruptions
+- limited visibility for planners and decision-makers
+- poor foundation for future analytics and optimization
 
-- daily production tracking
-- capacity monitoring
-- line stoppage logging
-- root-cause-oriented categorization
-- inventory and chassis flow control
-- shortage reporting and operational visibility
+This project was developed as a response to that class of problems.
 
-The project reflects a multidisciplinary approach at the intersection of:
+The goal was not merely to build a dashboard or a data entry interface, but to design a system that could:
 
-- **Industrial Engineering** — process design, production planning, bottleneck awareness, and operational control  
-- **Data Science** — exploratory analysis, KPI thinking, structured data modeling, and insight generation  
-- **Software Engineering** — modular application design, persistent storage, and scalable deployment through a web-based interface
+- organize production-related data in a structured format
+- improve operational visibility across manufacturing workflows
+- support monitoring of stoppages and shortages
+- create cleaner records for analysis and future optimization
+- translate industrial process understanding into a usable software tool
+
+This repository therefore represents more than a coding exercise.  
+It reflects a **problem-solving process** that started from a real operational need, moved through analytical prototyping, and resulted in a web-based system suitable for repeated use in a manufacturing context.
+
+---
+
+## Problem Context
+
+Production planning and shop-floor monitoring depend heavily on timely, consistent, and interpretable data. In practice, however, several issues tend to appear:
+
+- production records are entered manually and inconsistently
+- line stoppages are not categorized in a reusable way
+- material and chassis status are difficult to trace over time
+- shortage information is scattered and hard to aggregate
+- planners spend unnecessary time collecting data instead of interpreting it
+- recurring operational patterns remain hidden because records are not analysis-ready
+
+From an engineering perspective, this creates a gap between:
+
+1. **what is happening in the factory**, and  
+2. **what managers and planners can actually observe, measure, and improve**
+
+This project was designed to reduce that gap.
+
+---
+
+## Solution Approach
+
+The solution was developed in two major phases:
+
+### Phase 1: Analytical Prototyping in Jupyter Notebook
+The first version of the system was built in a notebook environment to validate the logic of the workflow before investing in a larger application structure.
+
+This phase was useful for:
+
+- exploring the operational problem in a flexible environment
+- testing data structures and table layouts
+- checking whether the workflow matched real production needs
+- evaluating which fields, categories, and reporting views were meaningful
+- validating that the collected information could later support analysis
+
+The notebook phase served as a **low-friction experimental layer** where the system could evolve quickly.
+
+### Phase 2: Flask-Based Web Application
+Once the workflow and logic were validated, the solution was redesigned as a web application.
+
+This architectural shift was necessary because notebooks are effective for analysis and prototyping, but they are not ideal for daily operational use by non-technical users. The web-based implementation made it possible to support:
+
+- repeatable daily interaction
+- structured data entry
+- more stable interface behavior
+- persistent storage
+- better separation of concerns between logic, presentation, and execution
+- a clearer path toward operational deployment
+
+The result is a system that reflects both **analytical reasoning** and **software product thinking**.
 
 ---
 
@@ -30,45 +90,30 @@ The project reflects a multidisciplinary approach at the intersection of:
 
 ### 1) Operational Web Application (Persian UI)
 
-> The deployed interface is in Persian because the system was designed for real operational use in an Iranian manufacturing context.
+> The deployed interface is in Persian because the system was designed for real operational use in an Iranian manufacturing environment.
 
-![Operational Web Application](./production_system.gif)
+<p align="center">
+  <img src="./factory_management_fa.gif" alt="Persian Operational Web Application" width="900">
+</p>
 
 ### 2) Early Analytical / Prototype Version (Jupyter-Based)
 
-> Before the web architecture was developed, the problem was first modeled and validated in Jupyter Notebook.  
-> This prototype phase helped test the logic, workflows, and data structure before implementation as a full web application.
+> Before the web architecture was implemented, the workflow and problem logic were first modeled and validated in Jupyter Notebook as an analytical prototype.
 
-![Jupyter Prototype](./notebooks/your-second-gif-name.gif)
+<p align="center">
+  <img src="./factory_management_en.gif" alt="English Jupyter Prototype" width="900">
+</p>
 
 ---
 
 ## Project Evolution
 
-This project was not built as a web application from the start.
-
-It began as a **Jupyter Notebook-based prototype**, where the core workflow, data structure, and operational logic were first explored and validated using Python. That early version made it possible to:
-
-- test data organization logic
-- simulate production and inventory workflows
-- evaluate the feasibility of the solution
-- identify what information operators and planners actually needed
-- examine whether the analytical outputs matched real production requirements
-
-After validating the concept, the solution was redesigned as a **Flask-based web application** because the notebook format was not suitable for long-term operational use.
-
-The web version was necessary to support:
-
-- structured and repeatable daily data entry
-- multi-page workflow organization
-- persistent relational storage
-- improved usability for non-technical users
-- easier operational deployment in a real factory setting
-
-In short, the development path was:
+A major strength of this project is that it shows the full lifecycle of engineering problem solving rather than only the final interface.
 ```text
-Problem in Production Environment
+Real Production Problem
+→ Workflow Observation
 → Jupyter-Based Prototype
-→ Workflow Validation
-→ Flask Web Architecture
-→ Operational Factory Tool
+→ Data Logic Validation
+→ Application Architecture Design
+→ Flask Web Implementation
+→ Operational Usage Context
